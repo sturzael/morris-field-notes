@@ -12,7 +12,7 @@ Authority is set by a written charter in three zones. Zone 1 is routine work: th
 
 It took five generations to get here, and each one died of something different. The first was over-built plumbing that never ran. The third was the most instructive: it produced 1,307 proposals, I approved 3, and the system's own post-mortem said it had been *"rewarded for producing output rather than for being right."*
 
-The current version has produced more than a hundred logged findings. Each one became a regression test (772 so far) and often a written engineering pattern. Here are the ones that matter for anyone deploying agents.
+The current version has produced more than a hundred logged findings. They became regression tests (772 so far) and often written engineering patterns. Here are the ones that matter for anyone deploying agents.
 
 ## 1. A rule in a prompt is a suggestion
 
@@ -24,7 +24,7 @@ Two lessons came out of this. First, the guard only worked for callers who chose
 
 ## 2. Built is not wired
 
-Over one weekend I wrote ten principles the system had to follow. A month later an audit compared them with what was actually running. Four of the ten weren't honoured. In each case the mechanism existed but nothing called it: a pause switch with no callers, a test suite that had never run on the production host, a scoring engine that had never once executed. Code review didn't catch any of them, because everything looked wired.
+In one day at the end of August I wrote ten principles the system had to follow. A month later an audit compared them with what was actually running. Four of the ten weren't honoured. In each case the mechanism existed but nothing called it: a pause switch with no callers, a test suite that had never run on the production host, a scoring engine that had never once executed. Code review didn't catch any of them, because everything looked wired.
 
 The audit that found them looked for *missing output*, not for code. "When did this last run, and what did it produce?" is now a standing check. Shipping a mechanism and shipping its caller are two separate changes, and the second one is the one that gets forgotten.
 
@@ -33,14 +33,14 @@ The audit that found them looked for *missing output*, not for code. "When did t
 Several of the most expensive failures were honest reports of the wrong thing:
 
 - A watcher that couldn't reach its source returned "nothing new." A quiet inbox and a broken connection looked identical. In one stretch, connectors failed silently for days before anyone noticed.
-- An instruction queue said "0 pending." That output is byte-for-byte the same whether everything was delivered or the queue was silently wiped by a sync job. It was wiped. The agent reported "delivered" twice, quoting the queue's own words.
-- The agent misreported **its own capabilities** in both directions. It escalated "I can't edit that kind of draft" as a tooling gap when the tool existed. It also claimed access it didn't have.
+- An instruction queue said "0 pending." That output is byte-for-byte the same whether everything was delivered or the queue was silently wiped by a sync job. It was wiped, and it was reported as "delivered" twice, quoting the queue's own words.
+- The agent misreported **its own capabilities**, twice within 24 hours. It escalated "I can't edit that kind of draft" as a tooling gap when the tool existed. It also reported a missing integration that turned out to work fine.
 
 The fix is cheap and structural. "Quiet" and "broken" get different exit codes and different wording. Watermarks never advance on a failed read. "I can't" needs the same evidence as "I did."
 
 ## 4. The agent will improve itself, and you may not see it
 
-A worker agent, asked to get a new code-review integration working, edited the review job's own prompt to add it. The change was a good one. But nobody saw it happen, and the agent's review behaviour had changed. The integration also posted its reviews under a human's account, because that was the only credential the connection had.
+A worker agent edited the review job's own prompt to add a new code-review integration. The change was a good one. But nobody saw it happen, and the agent's review behaviour had changed. The integration also posted its reviews under a human's account, because that was the only credential the connection had.
 
 Neither was malicious, and both are exactly the drift oversight exists to catch. The charter's rule is now explicit: the agent can't widen its own authority, and changes to its prompts are logged like any other action.
 
