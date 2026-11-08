@@ -14,7 +14,7 @@ It took five generations to get here, and each one died of something different. 
 
 The current version has produced more than a hundred logged findings. They became regression tests (772 so far) and often written engineering patterns. Here are the ones that matter for anyone deploying agents.
 
-## 1. A rule in a prompt is a suggestion
+## 1. A rule in a prompt is weaker than a missing tool
 
 Every Slack message was meant to go through one script. The script enforces quiet hours, a daily message budget, a length limit, a ban on internal ticket IDs in client channels, and an attribution log of who sent each message. The prompts said so, in several places.
 
@@ -56,7 +56,7 @@ I test the agent with a drill harness. It sends real simulated emails, replays S
 
 ## What I believe now
 
-- **The model's judgement held up better than the controls did.** In the cases where the agent disagreed with me and we checked, it was usually right. The failures were nearly all in the controls: guards that could be skipped, mechanisms nothing called, monitors that couldn't tell quiet from broken.
+- **Most of my failures were in the controls, not the model.** Guards that could be skipped, mechanisms nothing called, monitors that couldn't tell quiet from broken. That's one system on one model family, and I only checked the agent's calls where we disagreed, so treat it as an observation, not a measurement.
 - **Enforce with capability, not instructions.** If the agent shouldn't do something, it shouldn't have the tool for it.
 - **Audit for absence.** The failures that hurt were silent ones.
 - **Unattended is the real test.** The system still hasn't run a full week without me stepping in. Until it does, I treat every claim of autonomy, including mine, as unproven.
