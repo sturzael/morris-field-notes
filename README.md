@@ -63,6 +63,10 @@ I test the agent with a drill harness. It sends real simulated emails, replays S
 
 I don't think any of this is specific to my studio. More and more small businesses are handing agents their inboxes and credentials, usually with less scaffolding than this and with no one reading the logs. These failure shapes will turn up there too.
 
+## Patterns
+
+The incidents above were each written up as a rule at the time. A curated set of them, chosen for what they say about agent self-reports, oversight and evaluation, is in [`patterns/`](patterns/).
+
 *— Elliot Sturzaker, Wild Interactive*
 
 *Written with Claude's help; the system, the incidents and the conclusions are mine.*
