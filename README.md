@@ -63,6 +63,10 @@ I test the agent with a drill harness. It sends real simulated emails, replays S
 
 I don't think any of this is specific to my studio. More and more small businesses are handing agents their inboxes and credentials, usually with less scaffolding than this and with no one reading the logs. These failure shapes will turn up there too.
 
+## Follow-up: testing it
+
+One of these failures, an agent saying "I can't" when the tool existed, is now a small pre-registered experiment: [false-cant-pilot](https://github.com/sturzael/false-cant-pilot). The early result: hiding the tool didn't cause it. A single stale line in the agent's instructions did, often after the agent had already found the tool.
+
 ## Patterns
 
 The incidents above were each written up as a rule at the time. A curated set of them, chosen for what they say about agent self-reports, oversight and evaluation, is in [`patterns/`](patterns/).
